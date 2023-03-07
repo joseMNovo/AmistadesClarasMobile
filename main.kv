@@ -1,0 +1,145 @@
+#:kivy 2.1.0
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+
+WindowManager:
+    id: manager
+
+    MainWindow:
+        name: "mainwindow"
+
+        Image:        
+            source: "handshake.png"
+            opacity: 0.1
+            size_hint: 1, 0.9
+
+        FloatLayout:
+            size_hint: 1, None
+            height: "80dp"
+            padding: "200dp"
+            pos_hint: {"top": 1}
+
+            MDFillRoundFlatButton:
+                text: "Agregar"
+                font_size: 35
+                pos_hint:{"center_x": 0.17, "center_y": 0.5}
+                text_color: "#FFFFFF"
+                on_release:
+                    root.ids.grid_layout.add_text_field()
+
+            MDFillRoundFlatButton:
+                id: calcular
+                text: "Calcular"
+                font_size: 35
+                pos_hint:{"center_x": 0.50, "center_y": 0.5}
+                text_color: "#FFFFFF"
+                
+                disabled: True if primer_monto.text == '' or segundo_monto.text == '' or primer_nombre.text == '' or segundo_nombre.text == '' else False
+
+                on_release:
+                    root.ids.grid_layout.calcular_func()
+                    root.ids.second_grid_layout.setLabel()
+                    app.root.current = "secondwindow"
+
+            MDFillRoundFlatButton:
+                text: "Limpiar"
+                font_size: 35
+                pos_hint:{"center_x": 0.85, "center_y": 0.5}
+                md_bg_color: '#607D8B'
+                text_color: "#FFFFFF"
+                on_release:
+                    root.ids.grid_layout.limpiar()
+
+
+        ScrollView:
+            pos_hint: {"x": 0, "y": 0}
+            size_hint: 1, 0.9
+
+            MyGridLayout:
+                id: grid_layout
+                size_hint_y:None
+                cols: 2
+                spacing: "15dp"
+                padding: "12dp"
+                pos_hint: {"top":5}
+                halign: "center"
+                height: self.minimum_height
+
+                
+                MDTextField:
+                    id: primer_nombre
+                    hint_text: "Ingresar nombre"
+                    helper_text_mode: "on_focus"
+                    icon_right: "account"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    line_color_focus: 0, 0, 0, 0
+                    font_size: 50
+                    adaptive_height: True
+
+                MDTextField:
+                    id: primer_monto
+                    hint_text: "Ingresar monto"
+                    helper_text_mode: "on_focus"
+                    input_filter: "int"
+                    icon_right: "cash"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    line_color_focus: 0, 0, 0, 0
+                    font_size: 50
+                    adaptive_height: True
+                    markup: True
+
+                MDTextField:
+                    id: segundo_nombre
+                    hint_text: "Ingresar nombre"
+                    helper_text_mode: "on_focus"
+                    icon_right: "account"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    font_size: 50
+                    adaptive_height: True
+
+                MDTextField:
+                    id: segundo_monto
+                    hint_text: "Ingresar monto"
+                    helper_text_mode: "on_focus"
+                    icon_right: "cash"
+                    input_filter: "int"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    font_size: 50
+                    adaptive_height: True
+                    markup: True
+
+
+
+    SecondWindow:
+        id:second
+        name:"secondwindow"
+
+        Image:        
+            source: "handshake.png"
+            opacity: 0.1
+            allow_stretch: True
+
+        MySecondGridLayout:
+            id: second_grid_layout
+            size_hint_y:None
+            cols: 2
+            spacing: "30dp"
+            padding: "10dp"
+            pos_hint: {"top": .9}
+            
+            MDRoundFlatButton:
+                id: volver
+                text: "Volver"
+                font_size: 50
+                size_hint_x: 0.6
+                on_release:
+                    app.root.current = "mainwindow"
+
+
+
+
+
+
+
+                    
+
+
